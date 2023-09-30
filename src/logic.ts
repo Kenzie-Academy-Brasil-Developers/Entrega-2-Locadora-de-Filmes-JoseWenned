@@ -1,6 +1,8 @@
 import { Request, Response } from "express"
 import { client } from "./database"
 import { QueryConfig } from "pg"
+import format from "pg-format"
+import { Tmovies } from "./interfaces"
 
 
 export const createMovies = async (req: Request, res: Response) => {
@@ -50,4 +52,28 @@ export const createDelete = async (req: Request, res:Response) => {
     await client.query(queryConfig)
 
     res.status(204).json()
+}
+
+export const createUpdateMovies = async (req: Request, res:Response) => {
+
+    let objectData: Tmovies = {}
+    Object.entries(req.body).forEach(([key, value]) => {
+        if(key === "name" || key === "category"){
+            if(typeof value === "string"){
+                objectData[key] = value
+            }
+        }else if(key === "duration" || key === "price"){
+            if(typeof value === "number"){
+                objectData[key] = value
+            }
+        }
+    })
+
+    const queryConfig = format(`
+        UPDATE movies SET (%I) = ROW(%L) WHERE id = %L RETURNING *;
+    `, Object.keys(objectData), Object.values(objectData), req.params.id)
+
+    const query = await client.query(queryConfig)
+
+    res.status(200).json(query.rows)
 }

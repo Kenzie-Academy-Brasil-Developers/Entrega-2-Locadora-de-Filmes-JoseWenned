@@ -5,3 +5,5 @@ export interface Movies {
     duration: number,
     price: number
 }
+
+export type Tmovies = Partial<Pick<Movies, "name" | "category" | "duration" | "price">>

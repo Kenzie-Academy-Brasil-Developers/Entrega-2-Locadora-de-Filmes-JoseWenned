@@ -1,4 +1,4 @@
-import { Client } from "pg";
+import { Client } from "pg"
 
 export const client = new Client({
     user: process.env.DB_USER,

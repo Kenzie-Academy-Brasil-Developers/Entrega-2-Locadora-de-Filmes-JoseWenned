@@ -38,3 +38,16 @@ export const createGetReadId = async (req: Request, res:Response) => {
     res.status(200).json(res.locals.movie)
     
 } 
+
+export const createDelete = async (req: Request, res:Response) => {
+    const queryString = `DELETE FROM movies WHERE id = $1;`
+
+    const queryConfig : QueryConfig = {
+        text: queryString,
+        values: [req.params.id]
+    }
+
+    await client.query(queryConfig)
+
+    res.status(204).json()
+}

@@ -21,3 +21,20 @@ export const createMovies = async (req: Request, res: Response) => {
 
     res.status(201).json(query.rows[0])
 }
+
+export const createGetRead = async (req: Request, res:Response) => {
+    
+    const queryString = `
+        SELECT * FROM movies;
+    `
+
+    const query = await client.query(queryString)
+
+    res.status(200).json(query.rows)
+}
+
+export const createGetReadId = async (req: Request, res:Response) => {
+
+    res.status(200).json(res.locals.movie)
+    
+} 

@@ -25,14 +25,23 @@ export const createMovies = async (req: Request, res: Response) => {
 }
 
 export const createGetRead = async (req: Request, res:Response) => {
-    
-    const queryString = `
-        SELECT * FROM movies;
-    `
 
-    const query = await client.query(queryString)
+    let queryConfig : string | QueryConfig
 
-    res.status(200).json(query.rows)
+    if(req.query.category){
+        const search = '%' + req.query.category + '%'
+        queryConfig = format(`SELECT * FROM movies WHERE category ILIKE '%s';`, search)
+        const query = await client.query(queryConfig)
+
+        if(query.rowCount){
+            return res.status(200).json(query.rows)
+        }
+    }
+        
+    queryConfig = `SELECT * FROM movies;`
+    const query = await client.query(queryConfig)
+    return res.status(200).json(query.rows)
+       
 }
 
 export const createGetReadId = async (req: Request, res:Response) => {
@@ -77,3 +86,4 @@ export const createUpdateMovies = async (req: Request, res:Response) => {
 
     res.status(200).json(query.rows)
 }
+

@@ -11,6 +11,7 @@ export const client = new Client({
 const createTable = async () => {
     try {
         const queryString = `
+           DROP TABLE IF EXISTS movies; 
             CREATE TABLE IF NOT EXISTS movies (
             id SERIAL PRIMARY KEY,
             name VARCHAR(50) NOT NULL,

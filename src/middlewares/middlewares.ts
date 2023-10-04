@@ -7,7 +7,7 @@ export const isCreateBodyValid = (req: Request, res: Response, next:NextFunction
     const errors = []
 
     if(!req.body.name){
-        errors.push("Name is required")
+        errors.push("Name is required.")
     }
 
     if(req.body.name.length > 50){
@@ -50,10 +50,28 @@ export const isCreateValidId = async (req: Request, res: Response, next:NextFunc
     const query = await client.query(queryConfig)
 
     if(query.rowCount === 0){
-        return res.status(404).json({message: "Movie not found"})
+        return res.status(404).json({message: "Movie not found!"})
     }
 
     res.locals.movie = query.rows[0]
+
+    return next()
+}
+
+export const isCreateValidName =async (req: Request, res: Response, next:NextFunction) => {
+
+    const queryString = `SELECT * FROM movies WHERE name = $1;`
+
+    const queryConfig: QueryConfig = {
+        text: queryString,
+        values: [req.body.name]
+    }
+
+    const query = await client.query(queryConfig)
+
+    if(query.rows.length > 0){
+        return res.status(409).json({ message: "Movie name already exists!" })
+    }
 
     return next()
 }

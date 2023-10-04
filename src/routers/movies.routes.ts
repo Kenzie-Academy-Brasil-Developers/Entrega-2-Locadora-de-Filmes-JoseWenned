@@ -5,15 +5,16 @@ import {
     createGetRead, 
     createGetReadId, 
     createDelete, 
-    createUpdateMovies 
-    
+    createUpdateMovies,
+
 } from "../logic"
-import { isCreateBodyValid, isCreateValidId } from "../middlewares/middlewares"
+import { isCreateBodyValid, isCreateValidId, isCreateValidName} from "../middlewares/middlewares"
 
 export const moviesRoutes = Router()
 
-moviesRoutes.post("/", isCreateBodyValid, createMovies)
+moviesRoutes.post("/", isCreateValidName, isCreateBodyValid, createMovies)
 moviesRoutes.get("/", createGetRead)
 moviesRoutes.get("/:id", isCreateValidId, createGetReadId)
 moviesRoutes.delete("/:id", isCreateValidId, createDelete)
-moviesRoutes.patch("/:id", isCreateValidId, createUpdateMovies)
+moviesRoutes.patch("/:id", isCreateValidName, isCreateValidId, createUpdateMovies)
+

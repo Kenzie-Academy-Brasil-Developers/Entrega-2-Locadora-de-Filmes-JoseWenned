@@ -2,22 +2,23 @@ import { Request, Response } from "express"
 import { client } from "./database"
 import { QueryConfig } from "pg"
 import format from "pg-format"
-import { Tmovies } from "./interfaces"
+import { Tmovies, Movies } from "./interfaces"
 
 
 export const createMovies = async (req: Request, res: Response) => {
 
-    const queryString = `
+    const newMovie: Omit<Movies, "id"> = {
+        name: req.body.name,
+        category: req.body.category,
+        duration: req.body.duration,
+        price: req.body.price
+    };
 
-        INSERT INTO movies (name, category, duration, price)
-        VALUES ($1, $2, $3, $4)
-        RETURNING *;
-
-    `
-    const queryConfig: QueryConfig = {
-        text: queryString,
-        values: [req.body.name, req.body.category, req.body.duration, req.body.price]
-    }
+    const queryConfig = format(
+        `INSERT INTO movies (%I) VALUES (%L) RETURNING *;`,
+        Object.keys(newMovie),
+        Object.values(newMovie)
+    );
 
     const query = await client.query(queryConfig)
 
@@ -51,14 +52,9 @@ export const createGetReadId = async (req: Request, res:Response) => {
 } 
 
 export const createDelete = async (req: Request, res:Response) => {
-    const queryString = `DELETE FROM movies WHERE id = $1;`
+    const queryString = format(`DELETE FROM movies WHERE id = %L;`, req.params.id);
 
-    const queryConfig : QueryConfig = {
-        text: queryString,
-        values: [req.params.id]
-    }
-
-    await client.query(queryConfig)
+    await client.query(queryString)
 
     res.status(204).json()
 }
@@ -84,6 +80,6 @@ export const createUpdateMovies = async (req: Request, res:Response) => {
 
     const query = await client.query(queryConfig)
 
-    res.status(200).json(query.rows)
+    res.status(200).json(query.rows[0])
 }
 

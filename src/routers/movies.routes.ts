@@ -16,5 +16,5 @@ moviesRoutes.post("/", isCreateValidName, isCreateBodyValid, createMovies)
 moviesRoutes.get("/", createGetRead)
 moviesRoutes.get("/:id", isCreateValidId, createGetReadId)
 moviesRoutes.delete("/:id", isCreateValidId, createDelete)
-moviesRoutes.patch("/:id", isCreateValidName, isCreateValidId, createUpdateMovies)
+moviesRoutes.patch("/:id", isCreateValidId, isCreateValidName, createUpdateMovies)
 

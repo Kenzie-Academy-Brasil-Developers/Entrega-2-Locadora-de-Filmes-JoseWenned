@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "title": "CRUD the products",
+        "title": "CRUD the movies",
         "description": "Simple API to movies rental store",
         "version": "1.0.0"
     },

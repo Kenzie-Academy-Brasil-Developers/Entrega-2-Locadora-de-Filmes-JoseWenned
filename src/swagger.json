@@ -71,7 +71,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#components/schemas/CreatedMovies"
+                                    "$ref": "#components/schemas/CreateMovies"
                                 }
                             }
                         }

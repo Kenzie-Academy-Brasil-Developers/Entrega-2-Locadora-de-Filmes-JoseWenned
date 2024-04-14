@@ -1,0 +1,390 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "CRUD the products",
+        "description": "Simple API to movies rental store",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url":"http://localhost:3000/api-documentation",
+            "description": "Development env"
+        }
+    ],
+    "paths": {
+            "/movies":{
+                "get":{
+                    "description": "Router responsible for searching all movies register.",
+                    "tags": ["Router without parameter"],
+                    "responses": {
+                        "200": {
+                            "description": "Ok",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "array"
+                                    },
+                                    "examples": {
+                                        "response": {
+                                            "value": [
+                                                {
+                                                    "id": "1",
+                                                    "name": "Spider Man",
+                                                    "category": "action",
+                                                    "duration": 100,
+                                                    "price": 5.00
+                                                },
+                                                {
+                                                    "id": "2",
+                                                    "name": "Iron Man",
+                                                    "category": "action",
+                                                    "duration": 120,
+                                                    "price": 10.00
+                                                },
+                                                {
+                                                    "id": "3",
+                                                    "name": "Naruto",
+                                                    "category": "animation",
+                                                    "duration": 105,
+                                                    "price": 8.00
+                                                },
+                                                {
+                                                    "id": "4",
+                                                    "name": "101 dalmatas",
+                                                    "category": "animation",
+                                                    "duration": 130,
+                                                    "price": 12.00
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "security": [{}]
+                },
+                "post": {
+                    "description": "Router responsible for register movie.",
+                    "tags": ["Router without parameter"],
+                    "requestBody": {   
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/CreatedMovies"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "201": {
+                            "description": "Created",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type":"object",
+                                        "$ref": "#components/schemas/ReadMovies"
+                                    },
+                                    "examples": {
+                                        "product": {
+                                            "value": {
+                                                    "id": "2",
+                                                    "name": "Iron Man",
+                                                    "category": "action",
+                                                    "duration": 120,
+                                                    "price": 10.00
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "409": {
+                            "description": "Conflict",
+                            "content": {
+                                "application/json": {
+                                    "examples": {
+                                        "conflictNameRepeatError": {
+                                            "value": {
+                                                "message": "Movie name already exists"
+                                            }
+                                        },
+                                        "conflictNameError": {
+                                            "value": {
+                                                "message": "Name is required"
+                                            }
+                                        },
+                                        "conflictNameLengthError": {
+                                            "value": {
+                                                "message": "Name should not have more than 50 characters"
+                                            }
+                                        },
+                                        "conflictCategoryError": {
+                                            "value": {
+                                                "message": "Category is required"
+                                            }
+                                        },
+                                        "conflictCategoryLengthError": {
+                                            "value": {
+                                                "message": "Category should not have more than 20 characters"
+                                            }
+                                        },
+                                        "conflictDurationError": {
+                                            "value": {
+                                                "message": "Duration is required"
+                                            }
+                                        },
+                                        "conflictPriceError": {
+                                            "value": {
+                                                "message": "Price is required"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },"security": [{}]
+                }
+            },
+            "/movies/:id": {
+                "get":{
+                    "description": "The router responsible searching just movie information",
+                    "tags": ["Router with parameter"],
+                    "parameters": [
+                        {
+                            "schema": {
+                                "type": "number"
+                            },
+                            "in": "query",
+                            "description": "The Id movie you want to search.",
+                            "name": "id"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Ok",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "$ref": "#components/schemas/ReadMovies"
+                                    },
+                                    "examples": {
+                                        "response": {
+                                            "value": {
+                                                    "id": 1,
+                                                    "name": "Iron Man",
+                                                    "category": "action",
+                                                    "duration": 120,
+                                                    "price": 10.00  
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "404": {
+                            "description": "Not found",
+                            "content": {
+                                "application/json": {
+                                    "examples": {
+                                        "notFoundError": {
+                                            "value": {
+                                                "message": "Not found movie."
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "security": [{}]
+                },
+                "patch": {
+                    "description": "The router resposible update just movie information.",
+                    "tags": ["Router with parameter"],
+                    "parameters": [{
+                        "schema": {
+                            "type": "number"
+                        },
+                        "in": "query",
+                        "description": "The Id movie you want to search.",
+                        "name": "id"
+                    }],
+                    "requestBody": {   
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#components/schemas/UpdateMovies"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "201": {
+                            "description": "Successfully update movie",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "$ref": "#/components/schemas/UpdateMovies"
+                                    },
+                                    "examples": {
+                                        "response": {
+                                            "value": {
+                                                "id": 1,
+                                                "name": "Iron Man",
+                                                "category": "action",
+                                                "duration": 120,
+                                                "price": 10.00  
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "409": {
+                            "description": "Conflict",
+                            "content": {
+                                "application/json": {
+                                    "examples": {
+                                        "conflictError": {
+                                            "value": {
+                                                "message": "Movie name already exists"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },   
+                        "404": {
+                            "description": "Not found",
+                            "content": {
+                                "application/json": {
+                                    "examples": {
+                                        "notFoundError": {
+                                            "value": {
+                                                "message": "Not found movie."
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }                 
+                    }
+                },
+                "delete": {
+                    "description": "The router resposible delete just movie information.",
+                    "tags": ["Router with parameter"],
+                    "parameters": [{
+                        "schema": {
+                            "type": "number"
+                        },
+                        "in": "query",
+                        "description": "The Id movie you want to search.",
+                        "name": "id"
+                    }],
+                    "responses":{
+                        "204": {
+                            "description": "No body content"
+                        },
+                        "404": {
+                            "description": "Not found",
+                            "content": {
+                                "application/json": {
+                                    "examples": {
+                                        "notFoundError": {
+                                            "value": {
+                                                "message": "Not found movie."
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }   
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateMovies": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ReadMovies": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ReadAllMovies": {
+                "type": "array",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "UpdateMovies":{
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {"JWT": []}
+    ]
+}

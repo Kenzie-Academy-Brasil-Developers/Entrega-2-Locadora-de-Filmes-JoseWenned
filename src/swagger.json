@@ -1,0 +1,97 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "CRUD the products",
+        "description": "Simple API to movies rental store",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url":"http://localhost:3000/api-documentation",
+            "description": "Development env"
+        }
+    ],
+    "paths": {
+
+    },
+    "components": {
+        "schemas": {
+            "CreatedMovie": {
+                "type": "object",
+                "properties": {
+                   "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ReadMovie": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                   "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ReadAllMovie": {
+                "type": "array",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                   "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "UpdateMovie": {
+                "type": "object",
+                "properties": {
+                   "name": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+    ]
+}

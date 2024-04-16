@@ -28,28 +28,28 @@
                                         "response": {
                                             "value": [
                                                 {
-                                                    "id": "1",
+                                                    "id": 1,
                                                     "name": "Spider Man",
                                                     "category": "action",
                                                     "duration": 100,
                                                     "price": 5.00
                                                 },
                                                 {
-                                                    "id": "2",
+                                                    "id": 2,
                                                     "name": "Iron Man",
                                                     "category": "action",
                                                     "duration": 120,
                                                     "price": 10.00
                                                 },
                                                 {
-                                                    "id": "3",
+                                                    "id": 3,
                                                     "name": "Naruto",
                                                     "category": "animation",
                                                     "duration": 105,
                                                     "price": 8.00
                                                 },
                                                 {
-                                                    "id": "4",
+                                                    "id": 4,
                                                     "name": "101 dalmatas",
                                                     "category": "animation",
                                                     "duration": 130,
